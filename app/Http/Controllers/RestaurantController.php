@@ -6,7 +6,7 @@ use App\Http\Requests\RestaurantValidation;
 use App\Models\Restaurant;
 use Illuminate\Support\Facades\Auth;
 
-class RestaurantController extends Controller{
+class RestaurantController extends Controller {
 
     public function  store(RestaurantValidation $request): array {
         $restaurant = Restaurant::create(array_merge($request->validated(),['user_id'=> Auth::id(),]));
@@ -16,7 +16,7 @@ class RestaurantController extends Controller{
     }
 
     public function list(): array {
-        $restaurant = Restaurant::where('uer_id',Auth::id())->get();
+        $restaurant = Restaurant::where('user_id',Auth::id())->get();
         return ['restaurant'=> RestaurantResource::collection($restaurant),];
     }
 

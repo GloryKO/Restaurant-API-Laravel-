@@ -29,7 +29,7 @@ Route::get('/get-coutries',CountryController::class);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/get-countries', CountryController::class);
-    Route::get('/get-states', StateController::class);
+    //Route::get('/get-states', StateController::class);
 
     Route::prefix('restaurants')->group(function () {
         Route::get('/list', [RestaurantController::class, 'list']);
@@ -52,5 +52,9 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::post('/update/{menuItemId}', [MenuItemController::class, 'update'])->name('update_menu_item');
             Route::delete('/archive/{menuItemId}', [MenuItemController::class, 'archive']);
         });
+// ...
+            Route::post('/mark-as-non-operational/{tableId}', [TableStatusController::class, 'markAsNonOperational']);
+            Route::post('/mark-as-available/{tableId}', [TableStatusController::class, 'markAsAvailable']);
+            Route::post('/mark-as-reserved/{tableId}', [TableStatusController::class, 'markAsReserved']);
     });
 });
