@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class MenuResources extends JsonResource
+class TableResources extends JsonResource
 {
     public function toArray($request): array
     {
@@ -12,9 +12,9 @@ class MenuResources extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'extra_details'=>$this->extra_details,
-            'number'=>$thi->number,
+            'number'=>$this->number,
             'state'=>$this->state,
-            
+
         ];
     }
 }

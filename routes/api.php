@@ -51,10 +51,20 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::post('/add', [MenuItemController::class, 'store']);
             Route::post('/update/{menuItemId}', [MenuItemController::class, 'update'])->name('update_menu_item');
             Route::delete('/archive/{menuItemId}', [MenuItemController::class, 'archive']);
+
         });
+
 // ...
             Route::post('/mark-as-non-operational/{tableId}', [TableStatusController::class, 'markAsNonOperational']);
             Route::post('/mark-as-available/{tableId}', [TableStatusController::class, 'markAsAvailable']);
             Route::post('/mark-as-reserved/{tableId}', [TableStatusController::class, 'markAsReserved']);
+
+            Route::prefix('orders')->group(function () {
+                Route::post('/book-a-table/{tableId}', [OrderController::class, 'bookATable']);
+                Route::get('/details/{orderId}', [OrderController::class, 'details']);
+                Route::get('/list-open', [OrderController::class, 'listOpen']);
+                Route::get('/list-completed', [OrderController::class, 'listCompleted']);
+
+            });
     });
 });
