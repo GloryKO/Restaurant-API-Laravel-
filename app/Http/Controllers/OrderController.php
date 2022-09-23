@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
+use App\Models\Table;
+use App\ModelStates\Table\Available;
+use App\ModelStates\Table\Occupied;
 
 class OrderController extends Controller
 {
-
     public function listOpen(): array
     {
         $orders = Order::with('table')
@@ -31,8 +33,6 @@ class OrderController extends Controller
             'orders' => OrderResource::collection($orders),
         ];
     }
-
-    
 
     public function bookATable(int $tableId): array
     {
@@ -63,6 +63,16 @@ class OrderController extends Controller
         ];
     }
 
+    public function complete(int $orderId): void
+    {
+        $order = Order::with('table')
+            ->where('restaurant_id', request('restaurant_id'))
+            ->where('id', $orderId)
+            ->firstOrFail();
 
+        $order->table->changeStatusTo(Available::class);
+        $order->update([
+            'completed_at' => now(),
+        ]);
+    }
 }
-
