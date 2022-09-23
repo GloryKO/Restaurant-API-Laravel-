@@ -66,5 +66,11 @@ Route::middleware('auth:sanctum')->group(function () {
                 Route::get('/list-completed', [OrderController::class, 'listCompleted']);
 
             });
+            
+            Route::prefix('order-items')->group(function () {
+                Route::post('/add/{orderId}', [OrderItemController::class, 'add']);
+                Route::post('/change-quantity/{orderId}', [OrderItemController::class, 'changeQuantity']);
+                Route::post('/remove/{orderId}', [OrderItemController::class, 'remove']);
+            });
     });
 });

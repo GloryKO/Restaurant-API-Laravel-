@@ -7,6 +7,33 @@ use App\Models\Order;
 
 class OrderController extends Controller
 {
+
+    public function listOpen(): array
+    {
+        $orders = Order::with('table')
+            ->where('restaurant_id', request('restaurant_id'))
+            ->open()
+            ->get();
+
+        return [
+            'orders' => OrderResource::collection($orders),
+        ];
+    }
+
+    public function listCompleted(): array
+    {
+        $orders = Order::with('table')
+            ->where('restaurant_id', request('restaurant_id'))
+            ->completed()
+            ->get();
+
+        return [
+            'orders' => OrderResource::collection($orders),
+        ];
+    }
+
+    
+
     public function bookATable(int $tableId): array
     {
         $table = Table::where('restaurant_id', request('restaurant_id'))
@@ -36,5 +63,6 @@ class OrderController extends Controller
         ];
     }
 
-    
+
 }
+
